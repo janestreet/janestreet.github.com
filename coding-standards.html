@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <script type="text/javascript" src="shjs/sh_main.min.js"></script>
+    <script type="text/javascript" src="shjs/sh_caml.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="shjs/sh_navy.css"/>
+
+    <title>jane-street.github.com by jane-street</title>
+  </head>
+
+  <body onload="sh_highlightDocument();">
+
+    <header>
+      <div class="container">
+        <h1>jane-street.github.com</h1>
+        <h2>Jane Street Capital's Core Suite</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/jane-street" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Contributing to Core</h1>
+
+        <h1 id="!core-principles">Core Principles</h1>
+        <p>
+          This document is a <em>brief</em> overview of Core's coding
+          standards.  For a longer and more detailed discussion of the
+          motivation behind these standards, you can read
+          this <a href="https://ocaml.janestreet.com/?q=node/28">blog
+          post</a>.
+        </p>
+        <p>
+          Note that Core is designed differently from INRIA's standard
+          library, and so Core is not a drop-in replacement.  You will
+          have to modify code that's designed against INRIA's stdlib
+          to use Core.
+        </p>
+
+        <h2 id="!types-and-modules">Types and Modules</h2>
+
+        <p>
+          Almost all types should have the type-name <code>t</code>,
+          and should be kept in a dedicated module.  This even extends
+          to the built in types
+          like <code>int</code>, <code>float</code>
+          and <code>bool</code>, which have their own modules
+          in <code>Core</code>.
+        </p>
+
+        <h2 id="!t-comes-first"><code>t</code> comes first</h2>
+
+        <p>
+          If you have a function in a module <code>M</code> that takes
+          an argument of type <code>M.t</code>, then that argument
+          goes first by default.
+        </p>
+
+        <h3 id="!error-handling-exceptions-options-and-function-names">Error handling: exceptions, options and function names</h3>
+
+        <p>
+          In most circumstances, a function should not routinely throw
+          an exception unless it indicates so explicitly, either in
+          the function name, by ending with <code>_exn</code>, or in
+          the type of the return value, <em>e.g.</em>, using an
+          option.  Thus, <code>List.find</code> returns an option
+          rather than throwing <code>Not_found</code>,
+          and <code>List.find_exn</code> throws an exception.
+        </p>
+
+        <p>
+          Catching of individual exceptions is discouraged, and in
+          many cases, individual exceptions are not exported from the
+          modules in which they are defined.
+        </p>
+
+        <p>
+          When using the type of the return value to model the error,
+          consider the following forms:
+        </p>
+
+        <ul>
+          <li>
+            Use <code>option</code>, when no information needs to be
+            returned in the error case
+          </li>
+          <li>
+            Use <code>'a Or_error.t</code>, when there is textual
+            information to be returned in the error case.  (Note that
+            this is the same as a <code>('a,Error.t) Result.t</code>.)
+          </li>
+          <li>
+            Use a <code>Result.t</code> with a custom error type
+            (often a polymorphic value) when specific error
+            information needs to be handled programmatically.
+        </li>
+        </ul>
+
+        <p>
+          Other forms (for example, an <code>('a,exn) Result.t</code>)
+          do come up in Core, but are not the preferred mode.
+        </p>
+
+        <h2 id="!interface-includes">interface includes</h2>
+
+        <p>
+          There are a number of standardized interfaces that we use as
+          components of lots of different signatures.  Thus, if you
+          had a module representing a type that could be converted
+          back and forth to floats, supported comparison and has its
+          own hash function, you could write the interface as follows:
+        </p>
+
+        <pre class="sh_caml">
+module M : sig
+  type t
+  include Floatable  with type t := t
+  include Comparable with type t := t
+  include Hashable   with type t := t
+end
+</pre>
+
+      </section>
+    </div>
+
+
+  </body>
+</html>
