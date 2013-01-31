@@ -15,85 +15,63 @@
 
     <header>
       <div class="container">
-        <h1>janestreet.github.com</h1>
-        <h2>Jane Street Capital's Core Suite</h2>
+        <h1>Open Source @ Jane Street</h1>
 
         <section id="downloads">
-          <a href="https://github.com/janestreet" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+          <a href="https://github.com/janestreet">View on GitHub</a>
+          <a href="https://bitbucket.org/janestreet"> View on Bitbucket </a>
         </section>
       </div>
     </header>
 
     <div class="container">
       <section id="main_content">
-        <h1>The Core Suite</h1>
-
         <p>
-          The Core suite of libraries is an industrial strength
-          alternative to OCaml's standard library that was developed
-          by <a href="http://janestreet.com">Jane Street</a>, the
-          largest industrial user of OCaml.
-        </p>
-
-        <p>
-          Note that Core is <em>not</em> a compatible, drop-in
-          replacement for the standard library.  We've made different
-          design decisions, and so code designed for the standard
-          library would need to be adapted in order to use Core.
-        </p>
-
-        <p>
-          The Core suite has the following components:
+          Jane Street is built on open source.  Here you'll find the
+          open source libraries that we've released.  These include:
         </p>
 
         <ul>
-          <li>
-            <code>Core</code>, which is the heart of the standard
-            library
+          <li> <b>Core</b>, an industrial strength alternative to
+          OCaml's standard library. It is <em>not</em> a compatible,
+          drop-in replacement for the standard library.  We've made
+          different design decisions, and so code designed for the
+          standard library needs to be adapted to use Core.
           </li>
-          <li>
-            <code>Core_extended</code>, a set of extra, less carefully
-            tested and reviewed but still useful libraries.
-          </li>
-          <li>
-            <code>Async</code>, a monadic concurrency library
-          </li>
-          <li>
-            A set of syntax extensions, including <code>sexplib</code>
-            and <code>bin_prot</code>, which extend the OCaml language
+
+          <li> <b>Core_extended</b>, a set of useful extensions to
+          Core.  These are less well tested and less stable than Core
+          proper. </li>
+
+          <li> <b>Async</b>, a monadic concurrency library </li>
+
+          <li> A set of syntax extensions, including <b>Sexplib</b>
+            and <b>Bin_prot</b>, which extend the OCaml language
             itself.  These are <em>not</em> necessary to use the rest
             of the libraries, but they are necessary for building
             them.
           </li>
         </ul>
 
-        <p>
-          Core has been available for several years, but we've just
-          moved to a new development model for our open-source
-          libraries, and we hope this will make it easier to interact
-          and accept patches from others.  We'll have new stable
-          releases here soon, but for now, we just have the
-          development tree hosted here.
-        </p>
 
         <h2>Download</h2>
 
-        <p>Releases of Core are available here:</p>
+        <p>You can find release tarballs here:</p>
 
-        <p><a href="https://ocaml.janestreet.com/ocaml-core">https://ocaml.janestreet.com/ocaml-core</a></p>
+        <p><a href="https://ocaml.janestreet.com/ocaml-core">
+            https://ocaml.janestreet.com/ocaml-core</a></p>
 
-        <h2>Interested in contributing to Core?</h2>
-
-        <p>
-          Great!  We're happy to work with people who want to help
-          grow Core and the associated libraries.  In order to
-          contribute to Core, though, you need to sign the Core CLA
-          (Contributor License Agreement).  You can find more about
-          the legal
-          details <a href="http://ocaml.janestreet.com/core-contributor-info.html">here</a>.
-          And you can learn more about the practicalities of
-          contributing <a href="contributing.html">here</a>.
+        <p>Even easier, you can install our libraries using
+        the <a href="http://opam.ocamlpro.com">OPAM</a> package
+        manager.
         </p>
+
+        <h2>Interested in contributing?</h2>
+
+        <p> Great!  We're happy to work with people who want to help
+          grow Core and the associated libraries.  Learn more about
+          the practicalities of contributing <a
+          href="contributing.html">here</a>.  </p>
 
         <p>Core is available under the Apache open-source license.</p>
 
@@ -101,7 +79,7 @@
 
         <ul>
           <li>
-            Join the <code>Core</code> mailing
+            Join the Core mailing
             list <a href="https://groups.google.com/forum/#!forum/ocaml-core">here</a>.</li>
           <li>
             Read the <a href="coding-standards.html">coding
