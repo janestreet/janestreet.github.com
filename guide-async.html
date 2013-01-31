@@ -31,7 +31,7 @@
     <div class="container">
       <section id="main_content">
 
-        <h1>Dummies guide to Async</h1>
+        <h1>Dummy's guide to Async</h1>
 
         <p>
           Async is a library for asynchronous programming,
@@ -190,9 +190,11 @@ let read_first_line f : string -> string Deferred.t =
         </p>
 
 <pre class="sh_caml">
-let read_first_line f : string -> string Deferred.t =
+let read_and_concat f : string -> string Deferred.t =
   Reader.open_file f >>= fun r ->
-  Reader.read_line r
+  Reader.read_line r >>= fun line1 ->
+  Reader.read_line r >>= fun line2 ->
+  return (line1 ^ line2)
 </pre>
 
 
@@ -206,8 +208,8 @@ let read_first_line f : string -> string Deferred.t =
 let read_and_concat f : string -> string Deferred.t =
   Reader.open_file f >>= fun r ->
   Reader.read_line r >>= fun line1 ->
-  Reader.read_line r >>= fun line2 ->
-  return (line1 ^ line2)
+  Reader.read_line r >>| fun line2 ->
+  line1 ^ line2
 </pre>
 
         <h1 id="!error-handling">Error Handling</h1>
@@ -233,11 +235,20 @@ let read_and_concat f : string -> string Deferred.t =
         </p>
 
 <pre class="sh_caml">
-let read_and_concat f : string -> string Deferred.t =
-  Reader.open_file f >>= fun r ->
-  Reader.read_line r >>= fun line1 ->
-  Reader.read_line r >>| fun line2 ->
-  line1 ^ line2
+let connect_or_use_cached ~cache host_and_port =
+  let connect () =
+    let host = Host_and_port.host host_and_port in
+    let port = Host_and_port.port host_and_port in
+    Tc.connect ~host ~port ()
+  in
+  Monitor.try_with connect >>= function
+  | Ok (reader, writer) ->
+    Writer.write writer "hello";
+    Writer.close writer >>= fun () ->
+    Reader.contents reader
+  | Error _exn ->
+    read_and_concat cache
+
 </pre>
 
         <p>
