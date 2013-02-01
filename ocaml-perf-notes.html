@@ -93,7 +93,7 @@
 <h3 id="write-barriers">2.6) Write barriers</h3>
 <p>A write barrier is a basically a call to caml_modify and looks like the following:</p>
 <pre class="sh_caml">call    caml_modify</pre>
-<p><a href="http://eigenclass.org/R2/writings/optimizing-caml_modify">This website</a> gives a reasonable overview of what it does, you can ignore the specific performance improvement being suggested there. Any introductory text on garbage collection should give you some insight into why write barriers exist.</p>
+<p><a href="http://web.archive.org/web/20111114164033/http://eigenclass.org/R2/writings/optimizing-caml_modify">This webpage</a> and <a href="http://web.archive.org/web/20100816130113/http://eigenclass.org/R2/writings/write-barrier-cost">this one</a> give a reasonable overview of what <code>caml_modify</code> does. Any introductory text on garbage collection should give you some insight into why write barriers exist.</p>
 <h3 id="asserts-are-helpful-in-reading-asm.">2.7) Asserts are helpful in reading asm.</h3>
 <p>If you have a large function and wish to see how a particular part of the function translates into asm, a simple way to track down the fragment in assembly is to put asserts around it. This is just a hack, but in practice it saves you some time reading asm.</p>
 <p>Sometimes OCaml tends to optimize away provably correct asserts - this is something to watch out for. In the generated asm, the presence of the assert is indicated by:</p>
