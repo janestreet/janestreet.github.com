@@ -28,6 +28,7 @@
       <section id="main_content">
         <h1>Contributing to Core</h1>
 
+        <h2>Licensing</h2>
         <p>
         Jane Street requires that all contributors of code or
         documentation to Jane Street's open-source libraries complete,
@@ -59,9 +60,10 @@
         or sending a fax to 917-746-6597
         </p>
 
-        <p>
-          As a technical matter, here is the way of submitting to
-          core:
+        <h2>Submitting a patch</h2>
+
+        <p> Once you've submitted a CLA, here's how you go about
+        contributing a patch.
           <ul>
             <li>
               create a pull-request for the project you want to
@@ -72,11 +74,30 @@
               is not how we work internally.
             </li>
             <li>
-              once the change is accepted we will integrated to our
-              development/review process and it will be part of a
-              future release of Core.
+              Make sure that your changes match
+              our <a href="coding-standards.html">coding
+              standards</a>.  Also, if you introduce any significant
+              new functionality, you should make sure to include
+              documentation and unit tests.  The unit tests should
+              typically be done using the <b>pa_ounit</b> syntax
+              extension.
+            </li>
+            <li>
+              Someone at Jane Street will take responsibility for
+              migrating the patch through our internal process, and
+              communicating with you.  When review and testing is
+              complete, the next release will include your change.
             </li>
           </ul>
+
+          <h2>Release process</h2>
+
+          Internally we have a weekly release cycle for our code, but
+          we push those releases out publicly somewhat less often,
+          typically once a month.
+
+          The version numbers for all of our projects are
+          synchronized, so when a release
         </p>
 
       </section>
