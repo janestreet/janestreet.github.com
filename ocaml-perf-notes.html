@@ -65,7 +65,7 @@
 <p>The snippet below allocates 24 bytes (three 64-bit words).</p>
 <pre class="sh_caml">.L121:  subq    $24, %r15
         cmpq    caml_young_limit(%rip), %r15
-        jb      .LWoohoo! You&#39;ve read all the important messages in your inbox122</pre>
+        jb      .L122</pre>
 <p>This is the code at label .L122 that has the call to the GC followed by the jump to retry allocation with the new %r15 and young limit value after garbage collection.</p>
 <pre class="sh_caml">.L122:  call    caml_call_gc
 .L123:  jmp     .L121</pre>
