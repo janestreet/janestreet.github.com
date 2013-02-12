@@ -116,10 +116,40 @@ _line2 ();
 config.source_path &lt;- source_path;
 _line3 ();</pre>
 <p>When we compile this code with the [-S] flag, this gives us:</p>
-<pre class="sh_caml">movq    $1, %rax
-.loc    1   207
-call    camlFile_copier_test___line0_79835</pre>
-<p>.L224: .L225: subq $16, %r15 cmpq caml_young_limit(%rip), %r15 jb .L226 leaq 8(%r15), %rsi movq $1024, -8(%rsi) movq 0(%rsp), %rax movq %rax, (%rsi) movq camlConfig + 432(%rip), %rdi call caml_modify movq $1, %rax .loc 1 209 call camlFile_copier_test<strong>_line1_79836 .L228: movq 8(%rsp), %rax movq 88(%rax), %rsi movq camlConfig + 432(%rip), %rdi addq $24, %rdi call caml_modify movq $1, %rax .loc 1 211 call camlFile_copier_test</strong><em>line2_79837 .L229: movq 8(%rsp), %rax movq 96(%rax), %rsi movq camlConfig + 432(%rip), %rdi addq $32, %rdi call caml_modify movq $1, %rax .loc 1 213 call camlFile_copier_test</em>__line3_79838</p>
+<pre class="sh_caml">    movq    $1, %rax
+    .loc    1   207
+    call    camlFile_copier_test___line0_79835
+.L224:
+.L225:  subq    $16, %r15
+    cmpq    caml_young_limit(%rip), %r15
+    jb  .L226
+    leaq    8(%r15), %rsi
+    movq    $1024, -8(%rsi)
+    movq    0(%rsp), %rax
+    movq    %rax, (%rsi)
+    movq    camlConfig + 432(%rip), %rdi
+    call    caml_modify
+    movq    $1, %rax
+    .loc    1   209
+    call    camlFile_copier_test___line1_79836
+.L228:
+    movq    8(%rsp), %rax
+    movq    88(%rax), %rsi
+    movq    camlConfig + 432(%rip), %rdi
+    addq    $24, %rdi
+    call    caml_modify
+    movq    $1, %rax
+    .loc    1   211
+    call    camlFile_copier_test___line2_79837
+.L229:
+    movq    8(%rsp), %rax
+    movq    96(%rax), %rsi
+    movq    camlConfig + 432(%rip), %rdi
+    addq    $32, %rdi
+    call    caml_modify
+    movq    $1, %rax
+    .loc    1   213
+    call    camlFile_copier_test___line3_79838</pre>
 <p>Here the call to [_line0] looks like:</p>
 <pre class="sh_caml">movq    $1, %rax
 .loc    1   207
