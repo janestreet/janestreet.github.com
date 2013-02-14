@@ -1,52 +1,21 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+---
+layout: default
+---
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+# patdiff example
 
-    <script type="text/javascript" src="shjs/sh_main.min.js"></script>
-    <script type="text/javascript" src="shjs/sh_caml.min.js"></script>
-    <script type="text/javascript" src="shjs/sh_sh.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="shjs/sh_navy.css"/>
-
-    <title>Open Source @ Jane Street</title>
-  </head>
-
-  <body onload="sh_highlightDocument();">
-
-    <header>
-      <div class="container">
-        <h1>Open Source @ Jane Street</h1>
-
-        <section id="downloads">
-          <a href="https://github.com/janestreet">View on GitHub</a>
-          <a href="https://bitbucket.org/janestreet"> View on Bitbucket </a>
-        </section>
-      </div>
-    </header>
-
-    <div class="container">
-      <section id="main_content">
-
-        <h1>patdiff example</h1>
-
-        <code>patdiff</code> is a tool which displays differences
-        between two files. It uses the patience algorithm and display
-        word-by-word diferrences when appropriate instead of just line
-        differences. The full documentation is included in the
-        distribution
-        (<a href="https://github.com/janestreet/patdiff">repository</a>). Following
-        is an example of output, produced by the command:
+`patdiff` is a tool which displays differences between two files. It
+uses the patience algorithm and display word-by-word diferrences when
+appropriate instead of just line differences. The full documentation
+is included in the distribution
+([repository](https://github.com/janestreet/patdiff)). Following is an
+example of output, produced by the command:
 
 <pre class="sh_sh">
 $ patdiff writer.ml~109.07.00 writer.ml~109.08.00
 </pre>
 
-        The result:
+The result:
 
 <pre class="sh_sourceCode">
 ---writer.ml~109.07.00
@@ -123,10 +92,3 @@ $ patdiff writer.ml~109.07.00 writer.ml~109.08.00
     in
     let consumer =
 </pre>
-
-      </section>
-    </div>
-
-
-  </body>
-</html>
