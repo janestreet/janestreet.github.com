@@ -39,19 +39,29 @@ Also, if you want to contribute to this website, you can
 [fork it](https://github.com/janestreet/janestreet.github.com) and
 send us a pull request.
 
-## Resources
+## Documentation
 
-- Join the Core mailing list [here](https://groups.google.com/forum/#!forum/ocaml-core).
-- Read the [coding standards](coding-standards.html) page to see the design principles
-  behind Core.
-- Read our [blog](http://ocaml.janestreet.com) to learn more about how
-  we approach OCaml programming.
-- The [dummy's guide to Async](guide-async.html).
-- Writing [performance sensitive](ocaml-perf-notes.html) OCaml code.
+- The latest [API
+  documentation](https://ocaml.janestreet.com/ocaml-core/latest/doc/).
+- A [Hello World
+  Project](https://bitbucket.org/yminsky/core-hello-world) to get you
+  started on using Core.
 - A set of [installation hints](installation.html).
-- A [wish list](wish-list.html).
+- The [dummy's guide to Async](guide-async.html).
+
+## Other resources
+
+- Join the Core mailing list
+  [here](https://groups.google.com/forum/#!forum/ocaml-core).
 - A guide for [contributing to Core](contributing.html).
-- A [Hello World Project](https://bitbucket.org/yminsky/core-hello-world)
-  to get you started on using Core.
+- Read the [coding standards](coding-standards.html) page to see the
+  design principles behind Core.
 - The [patdiff](patdiff.html). tool. An improved diff-like tool using
   Core libraries.
+
+## Miscellaneous
+
+- A guide to writing [performance sensitive](ocaml-perf-notes.html)
+  OCaml code.
+- Read our [blog](http://ocaml.janestreet.com) to learn more about how
+  we approach OCaml programming.
