@@ -51,9 +51,6 @@ patch.
 
 ## Release process
 
-Internally we have a weekly release cycle for our code, but we push
-those releases out publicly somewhat less often, typically once a
-month.
-
-The version numbers for all of our projects are synchronized, so when
-a release
+Internally we have a weekly release cycle for our code.  For each
+release we export the changes to the public repositories and increase
+the version numbers of all modified projects.
