@@ -220,7 +220,6 @@ construct a stream and iterate over it immediately, never storing the
 stream directly anywhere, as in:
 
 <pre class="sh_caml">
-open Jane.Std
 open Async.Std
 open Async_print
 
@@ -235,7 +234,6 @@ collected almost immediately, and so is safe.  Here's an example that
 would involve a space leak:
 
 <pre class="sh_caml">
-open Jane.Std
 open Async.Std
 open Async_print
 
