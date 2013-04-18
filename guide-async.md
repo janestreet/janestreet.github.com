@@ -156,7 +156,7 @@ let connect_or_use_cached ~cache host_and_port =
   let connect () =
     let host = Host_and_port.host host_and_port in
     let port = Host_and_port.port host_and_port in
-    Tcp.connect ~host ~port ()
+    Tcp.connect (Tcp.to_host_and_port host port)
   in
   Monitor.try_with connect >>= function
   | Ok (reader, writer) ->
@@ -176,7 +176,7 @@ let connect ~maximum_delay host_and_port =
   let connect () =
     let host = Host_and_port.host host_and_port in
     let port = Host_and_port.port host_and_port in
-    Tc.connect ~host ~port ()
+    Tcp.connect (Tcp.to_host_and_port host port)
   in
   let rec retry ~delay =
     Monitor.try_with connect >>= function
