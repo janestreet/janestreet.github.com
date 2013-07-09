@@ -120,11 +120,12 @@ transformations, like this function that reads in the first two lines
 of the given file and concatenate them:
 
 <pre class="sh_caml">
-let read_and_concat f : string -> string Deferred.t =
-  Reader.open_file f >>= fun r ->
-  Reader.read_line r >>= fun line1 ->
-  Reader.read_line r >>= fun line2 ->
-  return (line1 ^ line2)
+let read_and_concat (f : string ) : string option Deferred.t =
+  Reader.open_file f 
+  >>= fun r -> Reader.read_line r 
+  >>= fun line1 -> Reader.read_line r 
+  >>= fun line2 -> match (line1,line2) with | (`Ok l1, `Ok l2) -> return (Some (l1 ^ l2))
+    | _ -> return None
 </pre>
 
 Note the use of return so that the last function actually returns a
