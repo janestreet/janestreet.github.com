@@ -107,9 +107,12 @@ if you want to open a file and then read the first line, you might do
 something like:
 
 <pre class="sh_caml">
-let read_first_line f : string -> string Deferred.t =
-  Reader.open_file f >>= fun r ->
-  Reader.read_line r
+let read_first_line (f : string) : string option Deferred.t =
+  Reader.open_file f 
+  >>= (fun r -> Reader.read_line r)
+  >>| function
+    | `Ok x -> Some x
+    | `Eof -> None
 </pre>
 
 And you can then do longer sequences of this if you want to do more
