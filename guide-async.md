@@ -163,7 +163,7 @@ let connect_or_use_cached ~cache host_and_port =
     Tcp.connect (Tcp.to_host_and_port host port)
   in
   Monitor.try_with connect >>= function
-  | Ok (reader, writer) ->
+  | Ok (_,reader, writer) ->
     Writer.write writer "hello";
     Writer.close writer >>= fun () ->
     Reader.contents reader
@@ -188,7 +188,7 @@ let connect ~maximum_delay host_and_port =
       let delay = Time.Span.min maximum_delay delay in
       Clock.after delay >>= fun () ->
       retry ~delay:(Time.Span.add delay delay)
-    | Ok (reader, writer) ->
+    | Ok (_,reader, writer) ->
       Writer.write writer "hello";
       Writer.close writer >>= fun () ->
       Reader.contents reader
