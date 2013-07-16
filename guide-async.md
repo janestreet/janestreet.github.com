@@ -109,7 +109,7 @@ something like:
 <pre class="sh_caml">
 let read_first_line (f : string) : string Deferred.t =
   Reader.open_file f 
-  >>= (fun r -> Reader.read_line r)
+  >>= fun r -> Reader.read_line r
   >>| function
     | `Ok x -> x
     | `Eof -> "Nothing to see here..."
@@ -124,7 +124,8 @@ let read_and_concat (f : string ) : string Deferred.t =
   Reader.open_file f 
   >>= fun r -> Reader.read_line r 
   >>= fun line1 -> Reader.read_line r 
-  >>= fun line2 -> match (line1,line2) with | (`Ok l1, `Ok l2) -> return (l1 ^ l2)
+  >>= fun line2 -> match (line1, line2) with
+    | (`Ok l1, `Ok l2) -> return (l1 ^ l2)
     | _ -> return "Nothing to see here..."
 </pre>
 
@@ -163,7 +164,7 @@ let connect_or_use_cached ~cache host_and_port =
     Tcp.connect (Tcp.to_host_and_port host port)
   in
   Monitor.try_with connect >>= function
-  | Ok (_,reader, writer) ->
+  | Ok (_, reader, writer) ->
     Writer.write writer "hello";
     Writer.close writer >>= fun () ->
     Reader.contents reader
@@ -188,7 +189,7 @@ let connect ~maximum_delay host_and_port =
       let delay = Time.Span.min maximum_delay delay in
       Clock.after delay >>= fun () ->
       retry ~delay:(Time.Span.add delay delay)
-    | Ok (_,reader, writer) ->
+    | Ok (_, reader, writer) ->
       Writer.write writer "hello";
       Writer.close writer >>= fun () ->
       Reader.contents reader
