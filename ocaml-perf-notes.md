@@ -333,11 +333,18 @@ when it does.
 1. It does not inline large functions. I don't know the exact metric.
 2. It does not inline "rec" bound functions - even if they are small
      and even if the function is not really recursive.
-3. It does not inline functions that are available through functor
-     application even if they are determinable statically.
+3. It does not inline local functions
+4. It does not inline functions containing a structured constant such
+   as:
+   <pre class="sh_caml">let f x = x :: [1]</pre>
+5. Function given as parameters are never inlined:
+   <http://caml.inria.fr/mantis/view.php?id=5917>
 
-In other cases you should look at the assembly to see if the function
-has been inlined or not.
+To see if a function will be inlined or not you can look at the output
+of `ocamlobjinfo`. The inlining of a function is decided at
+declaration time, so a function is either always inlined, either
+never. Unless the `.cmx` file containing it is not available when
+compiling a unit using this function.
 
 ### 3.4) Stack allocation of arguments
 
@@ -709,47 +716,6 @@ much one can do about this other than to move functor applications
 outside function definitions such that they are not repeatedly
 applied.
 
-### 3.14) Use an immutable accumulator if possible.
-
-Code like the following can be seen from time to time. The first
-snippet is worse than the later, because the later avoids calls to the
-write barrier.
-<pre class="sh_caml">
-let ls = ref [] in
-if test1
-then ls := 1 :: !ls;
-if test2
-then ls := 2 :: !ls;
-if test3
-then ls := 3 :: !ls;
-</pre>
-without assignments:
-<pre class="sh_caml">
-let ls = [] in
-let ls =
-  if test1
-  then 1 :: ls
-  else ls
-in
-let ls =
-  if test2
-  then 2 :: ls
-  else ls
-in
-let ls =
-  if test3
-  then 3 :: ls
-  else ls
-</pre>
-
-### 3.15) Use Array.init sparingly when creating float arrays
-
-1. It allocates a closure.
-2. The returned floats are boxed and they have to unboxed when stored
-     in the array.
-A better way to create float arrays if to use Array.create and a for
-loop.
-
 ### 3.16) Option.iter is sometimes not inlined
 
 This:
@@ -794,9 +760,9 @@ let opt_iter opt =
 
 ### 3.17) Optional arguments are not free even when inlined.
 
-When a function with optional arguments (and default values) is
-inlined, the inlining does not eliminate the cost of allocating the
-intermediate option type. Details below.
+When a function with optional arguments (and default values) is marked
+as an inlined function, the inlining does not eliminate the cost of
+allocating the intermediate option type. Details below.
 
 Consider:
 
