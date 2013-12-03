@@ -849,7 +849,7 @@ OCaml's `**` operator calls `pow()` in glibc.  Until glibc version
 significantly depending on the numeric values of arguments. This
 behavior is apparently fixed in glibc 2.14. Consider:
 
-```ocaml
+<pre class="sh_caml">
 open Core.Std let _ = _squelch_unused_module_warning_
 open Core_bench.Std
 
@@ -864,10 +864,11 @@ let () =
     Bench.Test.create ~name:"Float ** (4)" (fun () ->
       ignore (1.0000000000000020 ** 0.4999900000000000));
   ])
-```
+</pre>
 
 which produces:
-```shell
+<pre>
+
 $ ./z.exe -q 1 
 Estimated testing time 4s (4 benchmarks x 1s). Change using -quota SECS.
 ┌──────────────┬──────────────┬─────────┬────────────┐
@@ -878,7 +879,8 @@ Estimated testing time 4s (4 benchmarks x 1s). Change using -quota SECS.
 │ Float ** (3) │  11_465.42ns │   2.07w │      2.86% │
 │ Float ** (4) │      59.25ns │   2.00w │      0.01% │
 └──────────────┴──────────────┴─────────┴────────────┘
-```
+
+</pre>
 
 The typical execution time for this function is 60-70ns, but in some
 specific cases it can be as bad as 400us. One workaround for the
