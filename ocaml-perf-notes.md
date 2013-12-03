@@ -189,7 +189,7 @@ Sometimes OCaml tends to optimize away provably correct asserts - this
 is something to watch out for. In the generated asm, the presence of
 the assert is indicated by:
 
-```
+```nasm
     leaq    caml_exn_Assert_failure(%rip), %rbx
 ```
 
