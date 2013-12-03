@@ -164,9 +164,11 @@ represented as 1, the same as the representation of the int value 0.
 
 A write barrier is a basically a call to caml_modify and looks like
 the following:
+
 ```
     call    caml_modify
 ```
+
 [This webpage](http://web.archive.org/web/20111114164033/http://eigenclass.org/R2/writings/optimizing-caml_modify)
 ([pdf](https://ocaml.janestreet.com/documents/external/Making-mutable-state-faster-optimizing-the-caml-modify-write-barrier.pdf))
 and
@@ -186,9 +188,11 @@ but in practice it saves you some time reading asm.
 Sometimes OCaml tends to optimize away provably correct asserts - this
 is something to watch out for. In the generated asm, the presence of
 the assert is indicated by:
+
 ```
     leaq    caml_exn_Assert_failure(%rip), %rbx
 ```
+
 Hence if you are looking for a snippet of code in function f, first
 find f and then look for the asserts that you put in it. A more
 general method is the line numbers methods below:
@@ -221,6 +225,7 @@ config.source_path <- source_path;
 _line3 ();
 </pre>
 When we compile this code with the `-S` flag, this gives us:
+
 ```
 	movq	$1, %rax
 	.loc	1	207
@@ -257,12 +262,15 @@ When we compile this code with the `-S` flag, this gives us:
 	.loc	1	213
 	call	camlFile_copier_test___line3_79838
 ```
+
 Here the call to `_line0` looks like:
+
 ```
 	movq	$1, %rax
 	.loc	1	207
 	call	camlFile_copier_test___line0_79835
 ```
+
 The `$1` in the `%rax` register is the `()` argument. The lines
 between the calls `_line` functions are the asm generated from the
 original source. For example, the source line
@@ -270,6 +278,7 @@ original source. For example, the source line
     config.script <- Some script;
 </pre>
 produced:
+
 ```
     subq	$16, %r15
     cmpq	caml_young_limit(%rip), %r15
@@ -281,6 +290,7 @@ produced:
     movq	camlConfig + 432(%rip), %rdi
     call	caml_modify
 ```
+
 Note that the `.loc` annotation also gives us information about where
 the function being called is defined in the original source file.
 This approach to annotating the asm makes the effects of inlining
