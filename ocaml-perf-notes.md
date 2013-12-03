@@ -835,38 +835,48 @@ Some misc perf notes.
 ### 1) glibc `pow()` and the OCaml `**` operator.
 
 OCaml's `**` operator calls `pow()` in glibc.  Until glibc version
-2.12, the `pow()` function from the standard math lib has strange
-non-linearities in the time it takes to compute `pow()` depending on
-the numeric values of arguments.
+2.12, the execution time of `pow()` from the standard math lib varies
+significantly depending on the numeric values of arguments. This
+behavior is apparently fixed in glibc 2.14. Consider:
 
-Consider:
-<pre class="sh_caml">
-x = 0.000000946953708742651062124889 beta_s = 0.499999900000000
-likelihood  Time: 745181727 ticks 242.797ms
+```ocaml
+open Core.Std let _ = _squelch_unused_module_warning_
+open Core_bench.Std
 
-x = 0.000000946953708742651062124889 beta_s = 0.500000000000000
-likelihood  Time: 5211833102 ticks 1.55941s
+let () =
+  Command.run (Bench.make_command [
+    Bench.Test.create ~name:"Float ** (1)" (fun () ->
+      ignore (1.0000000000000020 ** 0.5000000000100000));
+    Bench.Test.create ~name:"Float ** (2)" (fun () ->
+      ignore (1.0000000000000020 ** 0.5000000000000000));
+    Bench.Test.create ~name:"Float ** (3)" (fun () ->
+      ignore (1.0000000000000020 ** 0.4999999999000000));
+    Bench.Test.create ~name:"Float ** (4)" (fun () ->
+      ignore (1.0000000000000020 ** 0.4999900000000000));
+  ])
+```
 
-x = 0.000000946953708742651062124889 beta_s = 0.500000010000000
-likelihood  Time: 809538470 ticks 261.576ms
-</pre>
-In the above 3 cases, the `beta_s` value is used as the exponential
-value and it is interesting to note that when `beta_s` is exactly 0.5
-the computation takes much longer. The snippet of code in glibc that
-determines when to take the slow is somewhat impenetrable and so at
-this point we are unsure which other numbers are slow. 1.5, 2.5,
-0.41666... are some that seem to be slow.
+which produces:
+```shell
+$ ./z.exe -q 1 
+Estimated testing time 4s (4 benchmarks x 1s). Change using -quota SECS.
+┌──────────────┬──────────────┬─────────┬────────────┐
+│ Name         │     Time/Run │ mWd/Run │ Percentage │
+├──────────────┼──────────────┼─────────┼────────────┤
+│ Float ** (1) │  11_491.57ns │   2.07w │      2.87% │
+│ Float ** (2) │ 400_987.47ns │   2.57w │    100.00% │
+│ Float ** (3) │  11_465.42ns │   2.07w │      2.86% │
+│ Float ** (4) │      59.25ns │   2.00w │      0.01% │
+└──────────────┴──────────────┴─────────┴────────────┘
+```
 
-The current workaround for the problem is to reduce the precision of
-x in pow(x, y), by doing:
+The typical execution time for this function is 60-70ns, but in some
+specific cases it can be as bad as 400us. One workaround for the
+problem is to reduce the precision of `x` in `pow(x, y)`, by doing
+`(Float.round_nearest (x *. 1e8)) *. 1e-8.`.
 
-<pre class="sh_caml">
-(Float.round_nearest (x *. 1e8)) *. 1e-8.
-</pre>
-
-This behavior is apparently fixed in glibc 2.14.  There is
-surprisingly little about this issue on the Internet. Here are two
-somewhat relevant links:
+There is surprisingly little about this issue on the Internet. Here
+are two somewhat relevant links:
 
 [http://entropymine.com/imageworsener/slowpow/](http://entropymine.com/imageworsener/slowpow/)
 
