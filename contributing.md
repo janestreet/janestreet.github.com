@@ -8,7 +8,7 @@ layout: default
 
 Jane Street requires that all contributors of code or documentation to
 Jane Street's open-source libraries complete, sign, and submit an
-[Individual Contributor License Agreement](http://ocaml.janestreet.com/core-icla-1_1.pdf).
+[Individual Contributor License Agreement](http://blogs.janestreet.com/core-icla-1_1.pdf).
 The purpose of this agreement is to clearly define the terms under
 which intellectual property has been contributed to thereby allow us
 to defend the project should there be a legal dispute regarding the
@@ -18,7 +18,7 @@ be accepted.
 
 Corporations that have assigned employees to work on Core should
 execute a
-[Corporate Contributor License Agreement](http://ocaml.janestreet.com/core-ccla-1_1.pdf).
+[Corporate Contributor License Agreement](http://blogs.janestreet.com/core-ccla-1_1.pdf).
 covering intellectual property that may have been assigned as part of
 an employment agreement. Individuals working for corporations that
 have signed a CCLA still have to sign their own Individual CLA, to
