@@ -134,11 +134,13 @@ deferred, even though it's just computing that value.  We could as
 well have written:
 
 <pre class="sh_caml">
-let read_and_concat f : string -> string Deferred.t =
+let read_and_concat (f:string) : string Deferred.t =
   Reader.open_file f >>= fun r ->
   Reader.read_line r >>= fun line1 ->
   Reader.read_line r >>| fun line2 ->
-  line1 ^ line2
+  match line1, line2 with 
+     | `Ok l1, `Ok l2 -> l1 ^ l2 
+     | _ -> "Nothing to see here..."
 </pre>
 
 ## Error Handling
