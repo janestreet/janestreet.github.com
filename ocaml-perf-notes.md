@@ -383,6 +383,7 @@ let cmp a b =
   compare a b
 </pre>
 in assembly:
+
 ```
 camlTest_asm__cmp_33386:
         subq    $8, %rsp
@@ -391,12 +392,14 @@ camlTest_asm__cmp_33386:
         leaq    caml_compare(%rip), %rax
         call    caml_c_call
 ```
+
 Here is an explicit float comparison:
 <pre class="sh_caml">
 let cmp_float1 (a : float) (b : float) =
   Float.compare a b
 </pre>
 in assembly:
+
 ```
 camlTest_asm__cmp_float1_33390:
     subq    $8, %rsp
@@ -406,12 +409,14 @@ camlTest_asm__cmp_float1_33390:
     addq    $8, %rsp
     ret
 ```
+
 Here is an inferred float comparison:
 <pre class="sh_caml">
 let cmp_float3 (a : float) (b : float) =
   compare a b
 </pre>
 in assembly:
+
 ```
 camlTest_asm__cmp_float3_33679:
     subq    $8, %rsp
@@ -433,6 +438,7 @@ let cmp_float2 (a : float) (b : float) =
   cmp a b
 </pre>
 Note that the inlining has happened as expected, but no specialization:
+
 ```
 camlTest_asm__cmp_float2_33676:
     subq    $8, %rsp
@@ -443,6 +449,7 @@ camlTest_asm__cmp_float2_33676:
     addq    $8, %rsp
     ret
 ```
+
 Doing just renaming also does not buy us anything, it is just as bad.
 <pre class="sh_caml">
 let cmp_compare = compare
@@ -451,6 +458,7 @@ let cmp_float4 (a : float) (b : float) =
   cmp_compare a b
 </pre>
 As before, inlined but not specialized.
+
 ```
 camlTest_asm__cmp_float4_33682:
     subq    $8, %rsp
@@ -461,6 +469,7 @@ camlTest_asm__cmp_float4_33682:
     addq    $8, %rsp
     ret
 ```
+
 So when in doubt, manually specify the type specific compare function.
 
 ### 3.7) Float boxing. Time is usually represented as a float.
@@ -499,6 +508,7 @@ let cmp_t1 a b =
   end
 </pre>
 Becomes the following. Notice the boxing operations for the floats.
+
 ```
 camlTest_asm__cmp_t1_33693:
         subq    $8, %rsp
@@ -537,13 +547,14 @@ camlTest_asm__cmp_t1_33693:
         addq    $8, %rsp
         ret
 ```
+
 The floats are boxed and then there are calls to the underlying float
 comparison. A much more efficient, though tedious function to write
 would be:
 <pre class="sh_caml">
 let cmp_t2 a b =
   if a.x = b.x then begin
-    if a.y = b.y then 1
+    if a.y = b.y then 0
     else if a.y < b.y then -1
     else 1
   end
@@ -554,6 +565,7 @@ let cmp_t2 a b =
   end
 </pre>
 Which becomes:
+
 ```
 camlTest_asm__cmp_t2_33697:
 .L124:
@@ -570,6 +582,7 @@ camlTest_asm__cmp_t2_33697:
         movq    $3, %rax
         ret
 ```
+
 Hence use =, <= and >= when possible in the case of floats. These map
 directly to the underlying asm instructions.
 NOTE: It may be useful to rewrite Float.compare using =, <= and >=.
@@ -594,6 +607,7 @@ let set_y t y =
 </pre>
 Which generates the following. Here there are calls to the write
 barrier.
+
 ```
 camlTest_asm__set_y_33718:
     subq    $8, %rsp
@@ -606,6 +620,7 @@ camlTest_asm__set_y_33718:
     addq    $8, %rsp
     ret
 ```
+
 Contrast the above with the following. Here the only difference is the
 type of x which causes the float to have an immediate representation
 (remember that in mixed records floats are boxed, whereas they are not
@@ -619,6 +634,7 @@ let set_y t y =
   t.y <- y
 </pre>
 Which generates:
+
 ```
 camlTest_asm__set_y_33727:
 .L137:
@@ -627,6 +643,7 @@ camlTest_asm__set_y_33727:
     movq    $1, %rax
     ret
 ```
+
 Changing representation of your data to avoid calls to the write
 barrier will help performance. As a side effect, your code may have
 the additional overhead of introducing unboxing and boxing
@@ -685,6 +702,7 @@ let mod_test x =
   M.f x
 </pre>
 Generates:
+
 ```
 camlTest_asm__mod_test_33742:
     movq    camlTest_asm + 120(%rip), %rbx
@@ -700,6 +718,7 @@ let mod_test x =
   M.f x
 </pre>
 We have:
+
 ```
 camlTest_asm__mod_test_33745:
     movq    (%rax), %rax
@@ -718,6 +737,7 @@ let mod_test2 x =
   M.g x
 </pre>
 Generates:
+
 ```
     call  camlTest_asm__S_33743
 ```
