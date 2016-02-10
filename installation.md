@@ -9,6 +9,10 @@ is to use [OPAM](http://opam.ocamlpro.com).
 
 ## Core in the toplevel
 
+_Note:_ these instructions might not work properly until this
+[pull request](https://github.com/ocaml/opam-repository/pull/5579) is
+merged in opam.
+
 If you want to use Core and its associated libraries and syntax
 extensions in the toplevel, you can put the following in your
 `.ocamlinit` file:
