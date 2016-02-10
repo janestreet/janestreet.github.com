@@ -16,17 +16,9 @@ extensions in the toplevel, you can put the following in your
 <pre class="sh_caml">
 #use "topfind"
 #thread
-#require "dynlink"
-#camlp4o
-#require "bin_prot.syntax"
-#require "sexplib.syntax"
-#require "variantslib.syntax"
-#require "fieldslib.syntax"
-#require "comparelib.syntax"
-#require "core"
+#require "ppx_jane,core.top"
 #require "async"
 #require "core_extended"
-#require "core.top"
 open Core.Std
 </pre>
 
@@ -36,8 +28,7 @@ If you want to build using `ocamlbuild`, then you can put the
 following in your `_tags` file:
 
 <pre class="sh_caml">
-true: syntax(camlp4o)
-true: package(core,sexplib.syntax,bin_prot.syntax,comparelib.syntax,fieldslib.syntax,variantslib.syntax)
+true: package(core,ppx_jane)
 true: thread,debug
 </pre>
 
