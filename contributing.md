@@ -25,10 +25,8 @@ have signed a CCLA still have to sign their own Individual CLA, to
 cover any of their contributions which are not owned by their
 employer.
 
-You can submit your CLA by:
-
-emailing a scan to <mailto:core-cla@janestreet.com> or sending a fax
-to 917-746-6597
+You can submit your CLA by emailing a scan to
+<mailto:core-cla@janestreet.com>
 
 ## Submitting a patch
 
