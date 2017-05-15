@@ -56,7 +56,7 @@ send us a pull request.
 - A guide for [contributing to Core](contributing.html).
 - Read the [coding standards](coding-standards.html) page to see the
   design principles behind Core.
-- The [patdiff](patdiff.html). tool. An improved diff-like tool using
+- The [patdiff](patdiff.html) tool. An improved diff-like tool using
   Core libraries.
 
 ## Miscellaneous
