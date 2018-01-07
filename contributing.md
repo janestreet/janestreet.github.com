@@ -41,7 +41,7 @@ patch.
   [coding standards](coding-standards.html).  Also, if you introduce
   any significant new functionality, you should make sure to include
   documentation and unit tests.  The unit tests should typically be
-  done using the **pa_ounit** syntax extension.
+  done using [ppx_inline_test](https://github.com/janestreet/ppx_inline_test).
 - Someone at Jane Street will take responsibility for migrating the
   patch through our internal process, and communicating with you.
   When review and testing is complete, the next release will include
